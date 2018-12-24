@@ -1,7 +1,7 @@
 import re
 
-fileContainer = open("one.txt", "r")
-pattern = re.compile('google')
+fileContainer = open("two.txt", "r")
+pattern = re.compile('developer', re.IGNORECASE)
 # using re.search() which returns true or false depending on whether the pattern is available
 def isSearch(fileContainer):
     for line in fileContainer:
