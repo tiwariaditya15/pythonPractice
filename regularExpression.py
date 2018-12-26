@@ -10,9 +10,10 @@ def isSearch(fileContainer):
 
 
 #using re.subn() which returns tuple of line read and numbers of replacement done per line
-def isSubn():
+def isSubn(fileContainer):
     for line in fileContainer:
         tup, num = re.subn('regular', 'non-linear', line)
         print('The returned string from subn is "{tupl}" and number of replacement of word done are {num}.'.format(tupl = tup, num = num))
 
-isSearch(fileContainer)
+#isSearch(fileContainer)
+isSubn(fileContainer)
