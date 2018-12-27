@@ -1,3 +1,4 @@
+import os
 def biFiles():
     fileContainer = open('Nobita.jpg', 'rb')
     newFile = open('new_nobita.jpg', 'wb')
