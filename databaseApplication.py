@@ -1,7 +1,8 @@
 
 import sqlite3
-
+import time
 class Database:
+    #Constructor would create database using object that has established connection between program and db
     def __init__(self, columnName1, columnName2, db):
         self.name = columnName1
         self.id = columnName2
@@ -9,19 +10,32 @@ class Database:
         db.execute('create table employee({col1} varchar(5), {col2} int not null)'.format(col1 = self.name, col2 = self.id))
         db.commit()
 
+    #Inserting into table once it's been created
     def insertion(self, db, row):
        db.execute('insert into employee ({col1}, {col2}) values(?, ?)'.format(col1 = self.name, col2 = self.id), (row['ename'], row['eid']))
        db.commit()
        print('Inserted Successfully.')
 
+    #Retrieving any row using primary key
     def retrive(self, pkey, db):
         cursor = db.execute('select * from employee where {primary} = {val}'.format(primary = self.id, val = pkey))
         for row in cursor:
-            print(row['ename'])
-    def updation(self): 
-        pass
-    def deletion(self):
-        pass
+            if ( row.keys()): 
+                print(row['ename'])
+            else:
+                print("Nothing's is available to print.")
+                break
+    
+    #Updating table using primary key
+    def updation(self, pkey, db): 
+        db.execute("update employee SET  ename = ? where eid = ?", ('Aditya Tiwari', pkey))
+        db.commit()
+    
+    #Deleting any row using primary key
+    def deletion(self, pkey, db):
+        db.execute('delete from  employee where eid = ?',(pkey,))
+        db.commit()
+        print('Deleted Succesfully.')
 
 
 
@@ -31,7 +45,14 @@ def main():
     dbclass = Database('ename', 'eid', db)
     db.row_factory = sqlite3.Row
     dbclass.insertion(db, dict(ename = 'aditya', eid = int(45)))
+    time.sleep(2)
+    dbclass.updation(45, db)
+    time.sleep(2)
     dbclass.retrive(45, db)
+    dbclass.deletion(45, db)
+    time.sleep(2)
+    dbclass.retrive(45, db)
+    time.sleep(2)
 
 main()
 
